@@ -1,21 +1,39 @@
-<div class="gallery-container">
-  <!-- Panel 1 -->
-  <div class="panel" style="background-image: url('https://images.unsplash.com/photo-1551244072-5d12893278ab?auto=format&fit=crop&w=800&q=80');">
+<!-- Include Google's 3D Model Viewer Script in your <head> -->
+<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+
+<div class="gallery">
+  
+  <!-- Slice 1 (Repeat this 10 times in your actual code) -->
+  <div class="slice">
+    <!-- BEFORE HOVER: Image & Text -->
+    <div class="content-normal" style="background-image: url('your-image-1.jpg');">
+      <div class="text-box">
+        <h3>Slice Title 1</h3>
+      </div>
+    </div>
+    
+    <!-- AFTER HOVER: 3D GLB Container -->
+    <div class="content-glb">
+      <model-viewer 
+        src="your-3d-model-1.glb" 
+        camera-controls 
+        auto-rotate>
+      </model-viewer>
+    </div>
   </div>
   
-  <!-- Panel 2 -->
-  <div class="panel" style="background-image: url('https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800&q=80');">
-  </div>
-  
-  <!-- Panel 3 -->
-  <div class="panel" style="background-image: url('https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?auto=format&fit=crop&w=800&q=80');">
+  <!-- Slice 2 -->
+  <div class="slice">
+    <div class="content-normal" style="background-image: url('your-image-2.jpg');">
+      <div class="text-box">
+        <h3>Slice Title 2</h3>
+      </div>
+    </div>
+    <div class="content-glb">
+      <model-viewer src="your-3d-model-2.glb" camera-controls auto-rotate></model-viewer>
+    </div>
   </div>
 
-  <!-- Panel 4 -->
-  <div class="panel" style="background-image: url('https://images.unsplash.com/photo-1543872084-c7bd3822856f?auto=format&fit=crop&w=800&q=80');">
-  </div>
+  <!-- ... (Add Slices 3 through 10 following the same pattern) ... -->
 
-  <!-- Panel 5 -->
-  <div class="panel" style="background-image: url('https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?auto=format&fit=crop&w=800&q=80');">
-  </div>
 </div>
