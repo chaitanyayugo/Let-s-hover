@@ -1,39 +1,104 @@
-/* 1. Container Setup */
-.gallery-container {
+/* Base Gallery Setup */
+.gallery {
   display: flex;
-  width: 90vw; /* Take up most of the screen width */
-  max-width: 1200px; /* But don't get too massive on huge monitors */
-  height: 60vh; /* Set a specific height */
-  margin: 50px auto; /* Center the container on the page */
-  gap: 10px; /* Creates the empty space between the panels */
+  width: 100%;
+  height: 80vh; /* Adjust height to your liking */
+  background: #000;
+  overflow: hidden; /* Hide anything that spills out */
 }
 
-/* 2. Default Panel State (Narrow & Dark) */
-.panel {
+/* Base State for all 10 slices */
+.slice {
+  flex: 1 1 10%; /* 10 slices = 10% width each */
+  position: relative;
+  transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  overflow: hidden;
+  border-right: 1px solid rgba(255,255,255,0.1);
+}
+
+/* =========================================
+   THE HOVER MATH & POSITIONING LOGIC
+========================================= */
+
+/* 1. When ANY slice in the gallery is hovered, collapse ALL slices to 0% */
+.gallery:has(.slice:hover) .slice {
+  flex: 0 0 0%;
+  opacity: 0;
+  border: none;
+}
+
+/* 2. THE HOVERED SLICE (Expands to 8 slices worth of width) */
+.gallery .slice:hover {
+  flex: 1 1 80%; /* Takes 80% of screen */
+  opacity: 1;
+}
+
+/* 3. THE LEFT ADJACENT SLICE (Moves to 1st position because others are 0px) */
+.gallery .slice:has(+ .slice:hover) {
+  flex: 0 0 10%; /* Keeps its 1 slice width */
+  opacity: 1;
+  border-right: 1px solid rgba(255,255,255,0.3);
+}
+
+/* 4. THE RIGHT ADJACENT SLICE (Moves to 10th position) */
+.gallery .slice:hover + .slice {
+  flex: 0 0 10%; /* Keeps its 1 slice width */
+  opacity: 1;
+  border-left: 1px solid rgba(255,255,255,0.3);
+}
+
+/* =========================================
+   CONTENT SWAPPING (Image -> GLB)
+========================================= */
+
+/* Absolute positioning so they overlap perfectly */
+.content-normal, .content-glb {
+  position: absolute;
+  inset: 0; /* Shorthand for top:0, left:0, right:0, bottom:0 */
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.6s ease;
+}
+
+/* Default Image Styling */
+.content-normal {
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
-  
-  /* The Flex magic: All panels start with equal width (flex-grow: 1) */
-  flex: 1; 
-  
-  /* Matches your image: Make them grayscale and slightly dark initially */
-  filter: grayscale(100%) brightness(0.7); 
-  
-  /* Optional: slightly round the corners */
-  border-radius: 8px; 
-  cursor: pointer;
-  
-  /* This tells the browser to smoothly animate the width and color changes */
-  transition: flex 0.6s cubic-bezier(0.25, 1, 0.5, 1), 
-              filter 0.6s ease;
+  display: flex;
+  align-items: flex-end; /* Puts text at bottom */
+  padding: 20px;
+  opacity: 1;
 }
 
-/* 3. The Hover State (Expanded & Colorful) */
-.panel:hover {
-  /* On hover, this specific panel grows to take up 5x more space than the others */
-  flex: 5; 
-  
-  /* Remove the black and white/dark filter */
-  filter: grayscale(0%) brightness(1); 
+.text-box h3 {
+  color: white;
+  margin: 0;
+  white-space: nowrap;
+}
+
+/* Default GLB container is hidden */
+.content-glb {
+  opacity: 0;
+  pointer-events: none; /* Prevents interaction when hidden */
+  background: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* GLB Model takes up full space */
+model-viewer {
+  width: 100%;
+  height: 100%;
+}
+
+/* When Slice is hovered, hide image and show GLB */
+.slice:hover .content-normal {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.slice:hover .content-glb {
+  opacity: 1;
+  pointer-events: auto; /* Allows user to drag/rotate 3D model */
 }
