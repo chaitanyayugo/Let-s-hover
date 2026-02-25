@@ -1,0 +1,39 @@
+/* 1. Container Setup */
+.gallery-container {
+  display: flex;
+  width: 90vw; /* Take up most of the screen width */
+  max-width: 1200px; /* But don't get too massive on huge monitors */
+  height: 60vh; /* Set a specific height */
+  margin: 50px auto; /* Center the container on the page */
+  gap: 10px; /* Creates the empty space between the panels */
+}
+
+/* 2. Default Panel State (Narrow & Dark) */
+.panel {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  
+  /* The Flex magic: All panels start with equal width (flex-grow: 1) */
+  flex: 1; 
+  
+  /* Matches your image: Make them grayscale and slightly dark initially */
+  filter: grayscale(100%) brightness(0.7); 
+  
+  /* Optional: slightly round the corners */
+  border-radius: 8px; 
+  cursor: pointer;
+  
+  /* This tells the browser to smoothly animate the width and color changes */
+  transition: flex 0.6s cubic-bezier(0.25, 1, 0.5, 1), 
+              filter 0.6s ease;
+}
+
+/* 3. The Hover State (Expanded & Colorful) */
+.panel:hover {
+  /* On hover, this specific panel grows to take up 5x more space than the others */
+  flex: 5; 
+  
+  /* Remove the black and white/dark filter */
+  filter: grayscale(0%) brightness(1); 
+}
